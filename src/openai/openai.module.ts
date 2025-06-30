@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { OpenaiController } from './openai.controller'
+import { OpenaiController } from '../controllers/openai.controller'
 import { OpenaiService } from './openai.service'
 import OpenAI from 'openai'
 import { ConfigModule, ConfigService } from '@nestjs/config'

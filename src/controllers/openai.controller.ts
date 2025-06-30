@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import { CreateChatCompletionRequest } from './dto/create-chat-completion.request'
-import { OpenaiService } from './openai.service'
+import { CreateChatCompletionRequest } from '../openai/dto/create-chat-completion.request'
+import { OpenaiService } from '../openai/openai.service'
 
 @Controller('openai')
 export class OpenaiController {
