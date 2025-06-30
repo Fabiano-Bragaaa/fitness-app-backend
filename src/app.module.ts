@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { OpenaiModule } from './openai/openai.module'
-import { PrismaService } from './prisma/prisma.service'
 import { CreateAccountController } from './controllers/create-account.contoller'
 import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
-import { CreateExerciseController } from './controllers/create-exercise.controller'
 import { UpdateExerciseController } from './controllers/update-exercise.controller'
 import { DeleteExerciseController } from './controllers/delete-exercise.controller'
-import { FetchExercisesController } from './controllers/fetch-exercises.controller'
 import { LogoutController } from './controllers/logout.controller'
 import { RefreshTokenController } from './controllers/refresh-token.controller'
+import { ExercisesModule } from './exercises/exercise.module'
+import { PrismaModule } from './prisma/prisma.module'
 
 @Module({
   imports: [
@@ -21,17 +20,16 @@ import { RefreshTokenController } from './controllers/refresh-token.controller'
     }),
     OpenaiModule,
     AuthModule,
+    ExercisesModule,
+    PrismaModule,
   ],
   controllers: [
     CreateAccountController,
     AuthenticateController,
-    CreateExerciseController,
     UpdateExerciseController,
     DeleteExerciseController,
-    FetchExercisesController,
     LogoutController,
     RefreshTokenController,
   ],
-  providers: [PrismaService],
 })
 export class AppModule {}

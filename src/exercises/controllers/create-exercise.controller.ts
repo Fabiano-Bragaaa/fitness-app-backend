@@ -2,9 +2,8 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common'
 import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard'
 import { UserPayload } from 'src/auth/jwt.strategy'
-import { exercisesService } from 'src/exercises/exercises.service'
+import { exercisesService } from '../exercises.service'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
-import { PrismaService } from 'src/prisma/prisma.service'
 import { z } from 'zod'
 
 const exerciseBodySchema = z.object({
