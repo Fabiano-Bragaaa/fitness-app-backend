@@ -22,16 +22,16 @@ export class AuthenticateController {
   ) {}
 
   @Post()
-  async handle(@Body(bodyValidationPipe) body: AuthenticateBodySchema){
-    const {email, password} = body
+  async handle(@Body(bodyValidationPipe) body: AuthenticateBodySchema) {
+    const { email, password } = body
 
     const user = await this.prisma.user.findUnique({
-      where:{
-        email
-      }
+      where: {
+        email,
+      },
     })
 
-     if (!user) {
+    if (!user) {
       throw new UnauthorizedException('User credentials do not match.')
     }
 
@@ -41,11 +41,18 @@ export class AuthenticateController {
       throw new UnauthorizedException('User credentials do not match.')
     }
 
-    const accessToken = this.jwt.sign({sub: user.id})
+    const accessToken = this.jwt.sign({ sub: user.id }, { expiresIn: '15m' })
 
-    return {access_token: accessToken}
+    const refreshToken = this.jwt.sign({ sub: user.id }, { expiresIn: '7d' })
 
+    await this.prisma.refreshToken.create({
+      data: {
+        userId: user.id,
+        token: refreshToken,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      },
+    })
+
+    return { access_token: accessToken, refresh_token: refreshToken }
   }
-
-  
 }
