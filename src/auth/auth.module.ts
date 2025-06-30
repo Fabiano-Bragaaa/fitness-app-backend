@@ -4,6 +4,10 @@ import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { Env } from 'src/env'
 import { JwtStrategy } from './jwt.strategy'
+import { AuthenticateController } from './controllers/authenticate.controller'
+import { CreateAccountController } from './controllers/create-account.contoller'
+import { LogoutController } from './controllers/logout.controller'
+import { RefreshTokenController } from './controllers/refresh-token.controller'
 
 @Module({
   imports: [
@@ -22,6 +26,12 @@ import { JwtStrategy } from './jwt.strategy'
         }
       },
     }),
+  ],
+  controllers: [
+    AuthenticateController,
+    CreateAccountController,
+    LogoutController,
+    RefreshTokenController,
   ],
   providers: [JwtStrategy],
 })
