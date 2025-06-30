@@ -26,7 +26,7 @@ export class RefreshTokenController {
         throw new UnauthorizedException('Refresh token expired.')
       }
 
-      const newAccessToken = this.authService.token(payload.sub)
+      const newAccessToken = await this.authService.token(payload.sub)
 
       return { access_token: newAccessToken }
     } catch (err) {
