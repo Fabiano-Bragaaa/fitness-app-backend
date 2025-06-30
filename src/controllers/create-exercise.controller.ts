@@ -2,6 +2,7 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common'
 import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard'
 import { UserPayload } from 'src/auth/jwt.strategy'
+import { exercisesService } from 'src/exercises/exercises.service'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { z } from 'zod'
@@ -19,7 +20,7 @@ type ExerciseBodySchema = z.infer<typeof exerciseBodySchema>
 @Controller('/exercises')
 @UseGuards(JwtAuthGuard)
 export class CreateExerciseController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private exerciseService: exercisesService) {}
 
   @Post()
   async handle(
@@ -28,13 +29,7 @@ export class CreateExerciseController {
   ) {
     const { duration, intensity, name } = body
     const { sub: userId } = user
-    await this.prisma.exercise.create({
-      data: {
-        duration,
-        intensity,
-        name,
-        userId,
-      },
-    })
+
+    await this.exerciseService.create({ name, duration, intensity, userId })
   }
 }
