@@ -1,8 +1,6 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcryptjs'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
-import { PrismaService } from 'src/prisma/prisma.service'
 import { hashToken } from 'src/utils/token-utils'
 import { z } from 'zod'
 import { AuthService } from '../auth.service'
