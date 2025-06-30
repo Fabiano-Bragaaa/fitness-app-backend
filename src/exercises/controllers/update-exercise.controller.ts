@@ -2,7 +2,7 @@ import { Body, Controller, Param, Patch, UseGuards } from '@nestjs/common'
 import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard'
 import { UserPayload } from 'src/auth/jwt.strategy'
-import { exercisesService } from 'src/exercises/exercises.service'
+import { ExercisesService } from 'src/exercises/exercises.service'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { z } from 'zod'
 
@@ -21,7 +21,7 @@ type ExerciseUpdateBodySchema = z.infer<typeof exerciseUpdateBodySchema>
 @Controller('/exercises')
 @UseGuards(JwtAuthGuard)
 export class UpdateExerciseController {
-  constructor(private exercise: exercisesService) {}
+  constructor(private exercise: ExercisesService) {}
 
   @Patch(':id')
   async handle(

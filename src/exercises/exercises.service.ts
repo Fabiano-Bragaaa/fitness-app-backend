@@ -15,7 +15,7 @@ interface UpdateExerciseParams {
 }
 
 @Injectable()
-export class exercisesService {
+export class ExercisesService {
   constructor(private prisma: PrismaService) {}
 
   async create({ duration, intensity, name, userId }: CreateExerciseParams) {

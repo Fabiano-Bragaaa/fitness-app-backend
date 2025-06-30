@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { CreateExerciseController } from './controllers/create-exercise.controller'
-import { exercisesService } from './exercises.service'
+import { ExercisesService } from './exercises.service'
 import { FetchExercisesController } from './controllers/fetch-exercises.controller'
 import { DeleteExerciseController } from './controllers/delete-exercise.controller'
 import { UpdateExerciseController } from './controllers/update-exercise.controller'
@@ -12,6 +12,6 @@ import { UpdateExerciseController } from './controllers/update-exercise.controll
     DeleteExerciseController,
     UpdateExerciseController,
   ],
-  providers: [exercisesService],
+  providers: [ExercisesService],
 })
 export class ExercisesModule {}
