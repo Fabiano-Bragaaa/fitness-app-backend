@@ -5,7 +5,7 @@ import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { hashToken } from 'src/utils/token-utils'
 import { z } from 'zod'
-import { AuthService } from './auth.service'
+import { AuthService } from '../auth.service'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),

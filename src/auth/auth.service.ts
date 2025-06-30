@@ -40,4 +40,13 @@ export class AuthService {
 
     return { refreshToken }
   }
+
+  async create(email: string, password: string) {
+    await this.prisma.user.create({
+      data: {
+        email,
+        password,
+      },
+    })
+  }
 }

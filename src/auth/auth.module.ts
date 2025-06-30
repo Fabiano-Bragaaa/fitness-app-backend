@@ -8,7 +8,7 @@ import { AuthenticateController } from './controllers/authenticate.controller'
 import { CreateAccountController } from './controllers/create-account.contoller'
 import { LogoutController } from './controllers/logout.controller'
 import { RefreshTokenController } from './controllers/refresh-token.controller'
-import { AuthService } from './controllers/auth.service'
+import { AuthService } from './auth.service'
 
 @Module({
   imports: [
