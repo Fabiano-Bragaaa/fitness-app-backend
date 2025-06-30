@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
 import { CreateExerciseController } from './controllers/create-exercise.controller'
 import { UpdateExerciseController } from './controllers/update-exercise.controller'
+import { DeleteExerciseController } from './controllers/delete-exercise.controller'
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UpdateExerciseController } from './controllers/update-exercise.controll
     AuthenticateController,
     CreateExerciseController,
     UpdateExerciseController,
+    DeleteExerciseController,
   ],
   providers: [PrismaService],
 })
