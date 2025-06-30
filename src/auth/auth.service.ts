@@ -55,4 +55,18 @@ export class AuthService {
       where: { userId: id },
     })
   }
+
+  async verifyJwt(token: string) {
+    const payload = await this.jwt.verify(token)
+
+    return { payload }
+  }
+
+  async storedToken(id: string) {
+    const storedToken = await this.prisma.refreshToken.findFirst({
+      where: { userId: id },
+    })
+
+    return { storedToken }
+  }
 }
