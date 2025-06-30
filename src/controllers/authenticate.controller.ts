@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcryptjs'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { hashToken } from 'src/utils/token-utils'
 import { z } from 'zod'
 
 const authenticateBodySchema = z.object({
@@ -45,10 +46,12 @@ export class AuthenticateController {
 
     const refreshToken = this.jwt.sign({ sub: user.id }, { expiresIn: '7d' })
 
+    const hashedRefreshToken = await hashToken(refreshToken)
+
     await this.prisma.refreshToken.create({
       data: {
         userId: user.id,
-        token: refreshToken,
+        token: hashedRefreshToken,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       },
     })
