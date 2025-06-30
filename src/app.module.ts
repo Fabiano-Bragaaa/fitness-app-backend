@@ -7,6 +7,7 @@ import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
 import { CreateExerciseController } from './controllers/create-exercise.controller'
+import { UpdateExerciseController } from './controllers/update-exercise.controller'
 
 @Module({
   imports: [
@@ -17,7 +18,12 @@ import { CreateExerciseController } from './controllers/create-exercise.controll
     OpenaiModule,
     AuthModule,
   ],
-  controllers: [CreateAccountController, AuthenticateController, CreateExerciseController],
+  controllers: [
+    CreateAccountController,
+    AuthenticateController,
+    CreateExerciseController,
+    UpdateExerciseController,
+  ],
   providers: [PrismaService],
 })
 export class AppModule {}
