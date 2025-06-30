@@ -10,6 +10,8 @@ import { CreateExerciseController } from './controllers/create-exercise.controll
 import { UpdateExerciseController } from './controllers/update-exercise.controller'
 import { DeleteExerciseController } from './controllers/delete-exercise.controller'
 import { FetchExercisesController } from './controllers/fetch-exercises.controller'
+import { LogoutController } from './controllers/logout.controller'
+import { RefreshTokenController } from './controllers/refresh-token.controller'
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { FetchExercisesController } from './controllers/fetch-exercises.controll
     UpdateExerciseController,
     DeleteExerciseController,
     FetchExercisesController,
+    LogoutController,
+    RefreshTokenController,
   ],
   providers: [PrismaService],
 })

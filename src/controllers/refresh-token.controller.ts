@@ -1,9 +1,10 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { verifyToken } from 'src/utils/token-utils'
 
 @Controller('/refresh')
-export class RefreshToken {
+export class RefreshTokenController {
   constructor(
     private prisma: PrismaService,
     private jwt: JwtService,
@@ -15,9 +16,10 @@ export class RefreshToken {
 
     try {
       const payload = this.jwt.verify(refresh_token)
+      const userId = payload.sub
 
       const storedToken = await this.prisma.refreshToken.findFirst({
-        where: { token: refresh_token },
+        where: { userId },
       })
 
       if (!storedToken) {

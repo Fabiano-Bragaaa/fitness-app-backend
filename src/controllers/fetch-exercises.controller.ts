@@ -1,5 +1,7 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common'
+import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard'
+import { UserPayload } from 'src/auth/jwt.strategy'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { z } from 'zod'
@@ -21,9 +23,16 @@ export class FetchExercisesController {
   constructor(private prisma: PrismaService) {}
 
   @Get()
-  async hadle(@Query('page', queryValidationPipe) page: PageQueryParamSchema) {
+  async hadle(
+    @Query('page', queryValidationPipe) page: PageQueryParamSchema,
+    @CurrentUser() user: UserPayload,
+  ) {
+    const { sub: userId } = user
     const perPage = 20
     const exercises = await this.prisma.exercise.findMany({
+      where: {
+        userId,
+      },
       take: perPage,
       skip: (page - 1) * perPage,
       orderBy: {
