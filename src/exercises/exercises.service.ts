@@ -37,4 +37,22 @@ export class exercisesService {
       },
     })
   }
+
+  async delete(id: string) {
+    await this.prisma.exercise.delete({
+      where: {
+        id,
+      },
+    })
+  }
+
+  async findById(id: string) {
+    const exercise = await this.prisma.exercise.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return { exercise }
+  }
 }
