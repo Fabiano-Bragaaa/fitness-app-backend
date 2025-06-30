@@ -6,15 +6,15 @@ export class CreateChatCompletionRequest {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ChatCompletionMessageDto)
-  messages: ChatCompletionMessageDto[];
+  messages!: ChatCompletionMessageDto[];
 }
 
 export class ChatCompletionMessageDto {
   @IsString()
   @IsNotEmpty()
-  role: string;
+  role!: string;
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  content!: string;
 }
