@@ -5,7 +5,6 @@ import { CreateAccountController } from './controllers/create-account.contoller'
 import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
-import { UpdateExerciseController } from './controllers/update-exercise.controller'
 import { LogoutController } from './controllers/logout.controller'
 import { RefreshTokenController } from './controllers/refresh-token.controller'
 import { ExercisesModule } from './exercises/exercise.module'
@@ -25,7 +24,6 @@ import { PrismaModule } from './prisma/prisma.module'
   controllers: [
     CreateAccountController,
     AuthenticateController,
-    UpdateExerciseController,
     LogoutController,
     RefreshTokenController,
   ],

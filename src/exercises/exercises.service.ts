@@ -8,6 +8,12 @@ interface CreateExerciseParams {
   userId: string
 }
 
+interface UpdateExerciseParams {
+  name?: string
+  duration?: string
+  intensity?: string
+}
+
 @Injectable()
 export class exercisesService {
   constructor(private prisma: PrismaService) {}
@@ -54,5 +60,14 @@ export class exercisesService {
     })
 
     return { exercise }
+  }
+
+  async update(id: string, params: UpdateExerciseParams) {
+    await this.prisma.exercise.update({
+      where: {
+        id,
+      },
+      data: params,
+    })
   }
 }

@@ -2,8 +2,8 @@ import { Body, Controller, Param, Patch, UseGuards } from '@nestjs/common'
 import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard'
 import { UserPayload } from 'src/auth/jwt.strategy'
+import { exercisesService } from 'src/exercises/exercises.service'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
-import { PrismaService } from 'src/prisma/prisma.service'
 import { z } from 'zod'
 
 const exerciseBodySchema = z.object({
@@ -21,7 +21,7 @@ type ExerciseUpdateBodySchema = z.infer<typeof exerciseUpdateBodySchema>
 @Controller('/exercises')
 @UseGuards(JwtAuthGuard)
 export class UpdateExerciseController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private exercise: exercisesService) {}
 
   @Patch(':id')
   async handle(
@@ -31,19 +31,12 @@ export class UpdateExerciseController {
   ) {
     const { sub: userId } = user
 
-    const exercise = await this.prisma.exercise.findUnique({
-      where: {
-        id,
-      },
-    })
+    const { exercise } = await this.exercise.findById(id)
 
     if (!exercise || exercise.userId !== userId) {
       throw new Error('Exercise not found or unathoized')
     }
 
-    await this.prisma.exercise.update({
-      where: { id },
-      data: body,
-    })
+    await this.exercise.update(id, body)
   }
 }
