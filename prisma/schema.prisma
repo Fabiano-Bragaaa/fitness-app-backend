@@ -24,10 +24,11 @@ model User {
 }
 
 model Exercise {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
   duration  String
   intensity String
+  createdAt DateTime @default(now()) @map("created_at")
   userId    String
 
   user User @relation(fields: [userId], references: [id])
