@@ -5,6 +5,7 @@ import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { hashToken } from 'src/utils/token-utils'
 import { z } from 'zod'
+import { AuthService } from './auth.service'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -17,20 +18,13 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
 
 @Controller('/sessions')
 export class AuthenticateController {
-  constructor(
-    private prisma: PrismaService,
-    private jwt: JwtService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
   @Post()
   async handle(@Body(bodyValidationPipe) body: AuthenticateBodySchema) {
     const { email, password } = body
 
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    })
+    const { user } = await this.authService.findByEmail(email)
 
     if (!user) {
       throw new UnauthorizedException('User credentials do not match.')
@@ -42,19 +36,13 @@ export class AuthenticateController {
       throw new UnauthorizedException('User credentials do not match.')
     }
 
-    const accessToken = this.jwt.sign({ sub: user.id }, { expiresIn: '15m' })
+    const { accessToken } = await this.authService.token(user.id)
 
-    const refreshToken = this.jwt.sign({ sub: user.id }, { expiresIn: '7d' })
+    const { refreshToken } = await this.authService.refreshToken(user.id)
 
     const hashedRefreshToken = await hashToken(refreshToken)
 
-    await this.prisma.refreshToken.create({
-      data: {
-        userId: user.id,
-        token: hashedRefreshToken,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      },
-    })
+    await this.authService.createToken(user.id, hashedRefreshToken)
 
     return { access_token: accessToken, refresh_token: refreshToken }
   }
