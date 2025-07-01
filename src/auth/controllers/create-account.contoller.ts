@@ -35,6 +35,15 @@ export class CreateAccountController {
 
     const hashPassword = await hash(password, 8)
 
-    await this.authService.create(email, hashPassword)
+    const response = await this.authService.create(email, hashPassword)
+
+    const { accessToken } = await this.authService.token(response.id)
+    const { refreshToken } = await this.authService.refreshToken(response.id)
+
+    return {
+      user: response,
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    }
   }
 }
