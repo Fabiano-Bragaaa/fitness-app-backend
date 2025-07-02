@@ -42,12 +42,14 @@ export class AuthService {
   }
 
   async create(email: string, password: string) {
-    await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         email,
         password,
       },
     })
+
+    return user
   }
 
   async logout(id: string) {

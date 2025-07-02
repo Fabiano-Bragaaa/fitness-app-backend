@@ -42,6 +42,6 @@ export class AuthenticateController {
 
     await this.authService.createToken(user.id, hashedRefreshToken)
 
-    return { access_token: accessToken, refresh_token: refreshToken }
+    return { access_token: accessToken, refresh_token: refreshToken, user }
   }
 }

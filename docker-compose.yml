@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     container_name: ftiness-app-api
@@ -12,4 +10,12 @@ services:
       POSTGRES_DB: ftiness-api
       PGDATA: /data/postgres
     volumes:
-      -  ./data/pg:/data/postgres
+      - ./data/pg:/data/postgres
+
+  backend:
+    build: .
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "npm", "run", "start:prod"]
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:docker@postgres:5432/ftiness-api
