@@ -100,7 +100,6 @@ Gerar Prisma Client:
 npx prisma generate
 Abrir Prisma Studio:
 
-bash
 
 npx prisma studio
 Estrutura do Projeto
