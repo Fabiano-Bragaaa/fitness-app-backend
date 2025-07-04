@@ -29,15 +29,11 @@ export class ExercisesService {
     })
   }
 
-  async fetch(page: number, userId: string) {
-    const perPage = 20
-
-    await this.prisma.exercise.findMany({
+  async fetch(userId: string) {
+    return await this.prisma.exercise.findMany({
       where: {
         userId,
       },
-      take: perPage,
-      skip: (page - 1) * 20,
       orderBy: {
         createdAt: 'desc',
       },
