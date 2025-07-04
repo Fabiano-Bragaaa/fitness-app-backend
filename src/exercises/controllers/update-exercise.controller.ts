@@ -1,4 +1,12 @@
-import { Body, Controller, Param, Patch, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  ForbiddenException,
+  NotFoundException,
+  Param,
+  Patch,
+  UseGuards,
+} from '@nestjs/common'
 import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard'
 import { UserPayload } from 'src/auth/jwt.strategy'
@@ -33,8 +41,14 @@ export class UpdateExerciseController {
 
     const { exercise } = await this.exercise.findById(id)
 
-    if (!exercise || exercise.userId !== userId) {
-      throw new Error('Exercise not found or unathoized')
+    if (!exercise) {
+      throw new NotFoundException('Exercise not found')
+    }
+
+    if (exercise.userId !== userId) {
+      throw new ForbiddenException(
+        'You are not allowed to access this exercise',
+      )
     }
 
     await this.exercise.update(id, body)
