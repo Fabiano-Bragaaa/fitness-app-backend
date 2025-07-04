@@ -30,9 +30,7 @@ Este backend foi projetado seguindo **princípios SOLID** e boas práticas de ar
 - dtos/
 - module.ts
 
-markdown
-Copy
-Edit
+
 Isso garante **baixo acoplamento** e **alta coesão**, facilitando a escalabilidade.
 
 - **DTOs (Data Transfer Objects):**  
@@ -67,63 +65,46 @@ cd fitness-app-backend
 2️⃣ Configurar variáveis de ambiente
 Crie o arquivo .env na raiz:
 
-dotenv
-Copy
-Edit
+
 DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/fitnessdb?schema=public
 JWT_SECRET=seuSegredoAqui
 PORT=3333
 3️⃣ Subir o banco com Docker
 Se usar Docker para o PostgreSQL, execute:
 
-bash
-Copy
-Edit
+
 docker-compose up -d
 4️⃣ Instalar dependências
-bash
-Copy
-Edit
+
 yarn install
 # ou
 npm install
 5️⃣ Rodar as migrations Prisma
-bash
-Copy
-Edit
+
 npx prisma migrate deploy
 # ou
 npx prisma migrate dev
 6️⃣ Rodar o servidor
-bash
-Copy
-Edit
+
 yarn start:dev
 # ou
 npm run start:dev
 Servidor rodando em:
 
-arduino
-Copy
-Edit
+
 http://localhost:3333
 Comandos úteis
 Gerar Prisma Client:
 
-bash
-Copy
-Edit
+
 npx prisma generate
 Abrir Prisma Studio:
 
 bash
-Copy
-Edit
+
 npx prisma studio
 Estrutura do Projeto
-bash
-Copy
-Edit
+
 /src
   /auth
   /exercises
@@ -147,9 +128,7 @@ Repositories: abstraem o acesso ao banco via Prisma.
 Rodando tudo com Docker (Backend + Banco)
 Caso tenha docker-compose.yml configurado com app + banco:
 
-bash
-Copy
-Edit
+
 docker-compose up --build
 Observações
 Projeto pensado para escalabilidade, testabilidade e baixa dependência entre módulos.
