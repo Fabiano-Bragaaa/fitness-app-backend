@@ -1,98 +1,157 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Fitness App Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend do projeto **Fitness App** desenvolvido com NestJS, Prisma ORM e TypeScript.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Node.js**
+- **NestJS**
+- **TypeScript**
+- **Prisma ORM**
+- **Docker & Docker Compose**
+- **PostgreSQL**
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## Arquitetura e Decisões Técnicas
 
-## Compile and run the project
+Este backend foi projetado seguindo **princípios SOLID** e boas práticas de arquitetura em aplicações NestJS:
 
-```bash
-# development
-$ npm run start
+- **Repository Pattern:**  
+  Cada entidade do domínio possui seu próprio repositório, isolando a lógica de acesso ao banco de dados, facilitando testes e manutenção.
 
-# watch mode
-$ npm run start:dev
+- **Separação por Módulos:**  
+  Toda funcionalidade foi modularizada. Por exemplo, a feature de exercícios fica na pasta:
+/src/exercises
+- controllers/
+- services/
+- dtos/
+- module.ts
 
-# production mode
-$ npm run start:prod
-```
+markdown
+Copy
+Edit
+Isso garante **baixo acoplamento** e **alta coesão**, facilitando a escalabilidade.
 
-## Run tests
+- **DTOs (Data Transfer Objects):**  
+Toda entrada e saída de dados é validada e tipada via DTOs, aumentando a previsibilidade e segurança dos dados.  
+A integração com a OpenAI também foi feita usando DTOs para garantir contratos de dados claros.
 
-```bash
-# unit tests
-$ npm run test
+- **Princípios SOLID aplicados:**
+- **S** (Single Responsibility): cada classe ou arquivo tem apenas uma responsabilidade.
+- **O** (Open/Closed): módulos são abertos para extensão e fechados para modificação.
+- **L** (Liskov Substitution): dependências podem ser trocadas por subclasses.
+- **I** (Interface Segregation): interfaces pequenas e específicas.
+- **D** (Dependency Inversion): inversão de dependências, injeção de dependências no NestJS.
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
-$ npm run test:cov
-```
+## Pré-requisitos
 
-## Deployment
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/getting-started/install) ou npm
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+---
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Como rodar o projeto
+
+### 1️⃣ Clonar o repositório
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+git clone https://github.com/Fabiano-Bragaaa/fitness-app-backend.git
+cd fitness-app-backend
+2️⃣ Configurar variáveis de ambiente
+Crie o arquivo .env na raiz:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+dotenv
+Copy
+Edit
+DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/fitnessdb?schema=public
+JWT_SECRET=seuSegredoAqui
+PORT=3333
+3️⃣ Subir o banco com Docker
+Se usar Docker para o PostgreSQL, execute:
 
-## Resources
+bash
+Copy
+Edit
+docker-compose up -d
+4️⃣ Instalar dependências
+bash
+Copy
+Edit
+yarn install
+# ou
+npm install
+5️⃣ Rodar as migrations Prisma
+bash
+Copy
+Edit
+npx prisma migrate deploy
+# ou
+npx prisma migrate dev
+6️⃣ Rodar o servidor
+bash
+Copy
+Edit
+yarn start:dev
+# ou
+npm run start:dev
+Servidor rodando em:
 
-Check out a few resources that may come in handy when working with NestJS:
+arduino
+Copy
+Edit
+http://localhost:3333
+Comandos úteis
+Gerar Prisma Client:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+bash
+Copy
+Edit
+npx prisma generate
+Abrir Prisma Studio:
 
-## Support
+bash
+Copy
+Edit
+npx prisma studio
+Estrutura do Projeto
+bash
+Copy
+Edit
+/src
+  /auth
+  /exercises
+      controllers/
+      services/
+      dtos/
+      module.ts
+  /users
+  /common
+  ...
+Cada módulo contém:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Controllers: definem endpoints REST.
 
-## Stay in touch
+Services: encapsulam regras de negócio.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+DTOs: validam e tipam dados.
 
-## License
+Repositories: abstraem o acesso ao banco via Prisma.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Rodando tudo com Docker (Backend + Banco)
+Caso tenha docker-compose.yml configurado com app + banco:
+
+bash
+Copy
+Edit
+docker-compose up --build
+Observações
+Projeto pensado para escalabilidade, testabilidade e baixa dependência entre módulos.
+
+Baseado em Domain-Driven Design (DDD) simplificado, com cada módulo representando um subdomínio.
